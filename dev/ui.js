@@ -1,8 +1,6 @@
 // открытие интерфейса нажатием
-Callback.addCallback("ItemUse", function (coords, item, block) {
-	if (BlockID.gui_block) {
+Callback.addCallback("PostLoaded", function (coords, item, block) {
 		openUI();
-	}
 });
 
 // контекст и виджеты
@@ -25,14 +23,15 @@ function runUI(code) {
 function showError(e) {
 	runUI(function () {
 		var builder = new android.app.AlertDialog.Builder(ctx, 16974126);
-		builder.setTitle("Script exception");
-		builder.setMessage(e + " (#" + e.lineNumber + ")");
-		builder.setPositiveButton("OK", null);
-		builder.setNeutralButton("Copy", function (v) {
-			runUI(function () {
-				ctx.getSystemService(android.content.Context.CLIPBOARD_SERVICE).setText(e + " at line " + e.lineNumber);
-			});
-		});
+		builder.setTitle("___________Script error___________");
+		var line = e.lineNumber;
+		builder.setMessage(e + " [Line #" + (line-10) + "]");
+		//builder.setPositiveButton("OK", null);
+		//builder.setNeutralButton("Copy", function (v) {
+		//	runUI(function () {
+		//		ctx.getSystemService(anldroid.content.Context.CLIPBOARD_SERVICE).setText(e + " at line " + e.lineNumber);
+		//	});
+		//});
 		builder.create().show();
 	});
 }
@@ -54,36 +53,37 @@ function closeUI() {
 function openUI() {
 	runUI(function () {
 		// разметка с виджетами
-		var layout = new android.widget.LinearLayout(ctx);
-		layout.setOrientation(android.widget.LinearLayout.VERTICAL);
+		var pane = new android.widget.LinearLayout(ctx);
+		pane.setOrientation(android.widget.LinearLayout.VERTICAL);
 
-		// фоновое изображение
-		var backgroundView = new android.widget.ImageView(ctx);
-		var bitmap = new android.graphics.BitmapFactory.decodeFile("/sdcard/Pictures/test.png");
-		backgroundView.setBackgroundDrawable(android.graphics.drawable.BitmapDrawable(bitmap));
+		// кнопка
+		var button1 = new android.widget.ImageView(ctx);
+		var params = new android.widget.LinearLayout.LayoutParams(160, 170);
+		var bitmap1 = new android.graphics.BitmapFactory.decodeFile(__dir__+"/gui/button_add.png");
+		var bitmap = new android.graphics.Bitmap.createBitmap(bitmap1, 0, 0, 16, 16);
+		button1.setBackgroundDrawable(android.graphics.drawable.BitmapDrawable(bitmap));
 
 		// добавление к разметке
-		layout.addView(backgroundView);
+		pane.addView(button1);
 
 		// создание окна с виджетами
-		widgetsWindow = new android.widget.PopupWindow(layout, android.widget.RelativeLayout.LayoutParams.WRAP_CONTENT, android.widget.RelativeLayout.LayoutParams.WRAP_CONTENT);
+		widgetsWindow = new android.widget.PopupWindow(pane, 160/*android.widget.RelativeLayout.LayoutParams.WRAP_CONTENT*/, 1600, false);
 		widgetsWindow.showAtLocation(ctx.getWindow().getDecorView(), android.view.Gravity.CENTER, 0, 0);
-
+/*
 		// разметка с кнопкой выхода
 		var layout = new android.widget.LinearLayout(ctx);
 		layout.setOrientation(android.widget.LinearLayout.VERTICAL);
-
 		// кнопка выхода
-		var button = new android.widget.Button(ctx);
-		button.setText("Exit");
-		var file = new android.graphics.BitmapFactory.decodeFile("/sdcard/Pictures/exit.png");
-		var bitmap = new android.graphics.Bitmap.createBitmap(file, 1 + 16, 1, 16, 16);
+		var button = new android.widget.ImageView(ctx);
+		//button.setText("Exit");
+		var file = new android.graphics.BitmapFactory.decodeFile(__dir__+"/gui/button_add.png");
+		var bitmap = new android.graphics.Bitmap.createBitmap(file, 0, 0, 16, 16);
 		button.setBackgroundDrawable(android.graphics.drawable.BitmapDrawable(bitmap));
-
 		// выход при нажатии
 		button.setOnClickListener(function (v) {
 			closeUI();
 		});
+
 
 		// добавление к разметке
 		layout.addView(button);
@@ -99,6 +99,6 @@ function openUI() {
 		//ридактар тикста
 
 		exitWindow.setFocusable(true);
-
+*/
 	});
 }
