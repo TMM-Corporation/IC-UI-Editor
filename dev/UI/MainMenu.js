@@ -1,3 +1,17 @@
+
+/*
+  _____               ______    _ _ _
+ |  __ \             |  ____|  | (_) |
+ | |  | | _____   __ | |__   __| |_| |_ ___  _ __
+ | |  | |/ _ \ \ / / |  __| / _` | | __/ _ \| '__|
+ | |__| |  __/\ V /  | |___| (_| | | || (_) | |
+ |_____/ \___| \_/   |______\__,_|_|\__\___/|_|
+
+
+       Developed by Nernar (vk.com/nernar)
+   This code is a copyright, do not distribute.
+
+*/
 function animate(name, layout, pos, widget, width, height) {
 	let animate = android.view.animation.AlphaAnimation(1, 0);
 	widget.layout.startAnimation(animate);
