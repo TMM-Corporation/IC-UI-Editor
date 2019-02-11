@@ -1,3 +1,7 @@
-UI/Widgets.js
-UI/Window.js
-UI/MenuWidgets.js
+UI/modules/editor.js
+UI/modules/FileAPI.js
+UI/modules/export.js
+UI/modules/text.js
+UI/modules/Widgets.js
+UI/modules/Window.js
+UI/MainMenu.js

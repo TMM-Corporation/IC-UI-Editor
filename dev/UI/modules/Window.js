@@ -38,29 +38,22 @@ var Windows = {
 				layout.setTag(type);
 				var widget = Windows.windows[type + "Menu"];
 				if(widget) {
-					if(Settings.config.interfaceAnimated) {
-						var animate = android.view.animation.TranslateAnimation(0, (type == "left") ? -widget.layout.getWidth() : (type == "right") ? widget.layout.getWidth() : 0, 0, 0);
-						widget.layout.startAnimation(animate);
-						animate.setDuration(400);
-						widget.layout.postDelayed(new java.lang.Runnable({
-							run: function() {
-								Widgets.run(function() {
-									widget.name = name;
-									widget.parent.removeAllViews();
-									widget.parent.addView(layout);
-									widget.layout = layout;
-									var animate = android.view.animation.TranslateAnimation((type == "left") ? -widget.parent.getWidth() : (type == "right") ? widget.parent.getWidth() : 0, 0, 0, 0);
-									layout.startAnimation(animate);
-									animate.setDuration(400);
-								});
-							}
-						}), 400);
-					} else {
-						widget.name = name;
-						widget.parent.removeAllViews();
-						widget.parent.addView(layout);
-						widget.layout = layout;
-					}
+					var animate = android.view.animation.TranslateAnimation(0, (type == "left") ? -widget.layout.getWidth() : (type == "right") ? widget.layout.getWidth() : 0, 0, 0);
+					widget.layout.startAnimation(animate);
+					animate.setDuration(400);
+					widget.layout.postDelayed(new java.lang.Runnable({
+						run: function() {
+							Widgets.run(function() {
+								widget.name = name;
+								widget.parent.removeAllViews();
+								widget.parent.addView(layout);
+								widget.layout = layout;
+								var animate = android.view.animation.TranslateAnimation((type == "left") ? -widget.parent.getWidth() : (type == "right") ? widget.parent.getWidth() : 0, 0, 0, 0);
+								layout.startAnimation(animate);
+								animate.setDuration(400);
+							});
+						}
+					}), 400);
 				} else {
 					var scroll = Widgets.scroll(layout);
 					var window = Widgets.window(scroll,

@@ -42,12 +42,14 @@ var Widgets = {
 			? (value * 1 / 800 * this.display.width)
 			: (value * 1 / 480 * this.display.height);
 	},
-	check: function(image) {
-		return image && new java.io.File(__dir__ + "gui/" + image + ".png").exists();
+	check: function(image, isPath) {
+		if(!isPath){return image && new java.io.File(__dir__ + "gui/" + image + ".png").exists();
+	}	else {return image && new java.io.File(image).exists();}
 	},
-	bitmap: function(file, scale) {
+	bitmap: function(file, scale, isPath) {
 		if(!this.check(file)) return null;
-		var bitmap = FileTools.ReadImage(__dir__ + "gui/" + file + ".png");
+		var bitmap = null;
+		if(isPath){	bitmap = FileTools.ReadImage(file);	}else{	bitmap = FileTools.ReadImage(__dir__ + "gui/" + file + ".png");	}
 		return android.graphics.drawable.BitmapDrawable(android.graphics.Bitmap.createScaledBitmap(android.graphics.Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight()), bitmap.getWidth() * (scale || 1), bitmap.getHeight() * (scale || 1), false));
 	},
 	parse: function(color) {
@@ -102,9 +104,9 @@ var Widgets = {
 		if(params) button.setLayoutParams(params);
 		return button;
 	},
-	image: function(file, scale, params) {
+	image: function(file, scale, params, isPath) {
 		var image = new android.widget.ImageView(this.ctx);
-		if(file) image.setImageDrawable(this.bitmap(file, scale));
+		if(file) image.setImageDrawable(this.bitmap(file, scale, isPath));
 		if(params) image.setLayoutParams(params);
 		return image;
 	},
@@ -113,7 +115,7 @@ var Widgets = {
 		text.setText((msg != null) ? msg : "");
 		if(size != null) text.setTextSize(this.resize(size));
 		text.setTextColor(color || this.color.WHITE);
-		text.setGravity(gravity || this.gravity.center);
+		text.setGravity(gravity || this.gravity.left);
 		text.setTypeface(this.font);
 		if(params) text.setLayoutParams(params);
 		return text;

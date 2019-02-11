@@ -1,4 +1,4 @@
-/*var values = {
+var values = {
 	c: null,
 	skip: 60,
 	content: function(){if(this.c!=null || this.c!=undefined)return this.c.getGuiContent()},
@@ -65,4 +65,3 @@ var editor = {
 		}
 	}
 };
-*/

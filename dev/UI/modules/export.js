@@ -10,8 +10,7 @@ var export = function(e){
 		let full = "var testUI = new UI.StandartWindow({\n\tstandart: { header: {text: { text: { \"Created With UIEditor\"}}},\n\tdrawing: "+e.drawing +"\n\telements: "+e.elements+"\n});";
 		FileAPI.write(file, full);
 	}
-}, 
-exportText = function(text, rewrite){
+}, exportText = function(text, rewrite){
 	let file = FileAPI.select(__dir__+"guis", "text.js");
 	if(FileTools.isExists(__dir__+"guis")==false)
 		FileAPI.createNewDir(__dir__,"guis");

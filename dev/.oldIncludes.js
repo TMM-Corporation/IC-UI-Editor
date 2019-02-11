@@ -1,9 +1,9 @@
-//UIEditor/modules/export.js
-//UIEditor/FileAPI.js
+UIEditor/modules/export.js
+UIEditor/FileAPI.js
 
-//UIEditor/editorUI.js
+UIEditor/editorUI.js
 
-//UIEditor/modules/addToUI.js
-//UIEditor/modules/buttons.js
-//UIEditor/modules/text.js
-//UIEditor/modules/launch.js
+// modules/addToUI.js
+// modules/buttons.js
+modules/text.js
+modules/launch.js
