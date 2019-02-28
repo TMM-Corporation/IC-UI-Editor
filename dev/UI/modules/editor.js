@@ -8,37 +8,84 @@ var gui = {
 	bg: {type: "background", color: null} //background null
 };
 var editorUI = {
+	deleted: 0,
 	name: null,
 	current: null,
+	count: 0,
 	main: {
 		Window: new UI.StandartWindow({
 			standart: { header: {text: {text: "UI Editor"}},
 			background: {color: android.graphics.Color.rgb(179, 179, 179)}},
 			drawing: [], elements: {
-				"test": {type: "button", x: 100, y: 100, scale: 3.2, size: 40, bitmap: "button_element", clicker: {onClick: function(){editorUI.setCurrent("test");}}},
+				"test": {type: "button", x: 100, y: 100, scale: 3.2, size: 40, bitmap: "button_element", clicker: {onClick: function(){edit(["select", "test"]);}}},
 			} }),
 		container: null
 	},
-	addUIElement: function(name, prop){
-		editorUI.main.Window.content.elements[name] = prop;
-	},
-	removeUIElement: function(){
-		editorUI.main.Window.content.elements[editorUI.name] = null;
-	},
-	open: function(ui){
+	open: function(){
+		let ui = editorUI.main;
 		if(ui.enabled != true){
 			ui.container = new UI.Container();
 			ui.container.openAs(ui.Window);
 			ui.enabled = true;
-		}else{this.close(ui);}
+		}else{this.close();}
 	},
-	close: function(ui) {
+	close: function() {
+		let ui = editorUI.main;
 		ui.container.close();
 		ui.container = null;
 		ui.enabled = false;
-	},
-	setCurrent: function(name) {
-		editorUI.current = editorUI.main.Window.content.elements[name];
-		editorUI.name = name;
 	}
 };
+function edit(changes, longclick, alertEnabled){
+	var cur = editorUI.current,
+		c = changes[0], // selected option
+		name = changes[1], // name of element
+		props = changes[2]; // props for element
+	if(editorUI.current!=null){
+		if(longclick==true){
+			if(c=="right")cur.x+=10;
+			if(c=="left")cur.x-=10;
+			if(c=="down")cur.y+=10;
+			if(c=="up")cur.y-=10;
+		}else{
+			if(c=="right")cur.x+=1;
+			if(c=="left")cur.x-=1;
+			if(c=="down")cur.y+=1;
+			if(c=="up")cur.y-=1;
+			if(c=="scaleUp")cur.scale+=0.1;
+			if(c=="scaleDown")cur.scale-=0.1;
+			if(c=="sizeUp")cur.size+=1;
+			if(c=="sizeDown")cur.si
+		}
+	}
+	if(c=="remove"){
+		if(cur){
+			editorUI.main.Window.content.elements[editorUI.name] = null;
+			editorUI.deleted+=1;
+			editorUI.name = null;
+			editorUI.current = null;
+			edit(["match"]);
+		}else alert("No item selected");
+	}
+	if(c=="match"){
+		let count = 0;
+		count-=editorUI.deleted;
+		for(let i in editorUI.main.Window.content.elements) count++;
+		editorUI.count = count;
+		if(alertEnabled!=false)
+		alert("Elements in GUI Total = "+editorUI.count);
+		return count;
+	};
+	if(c=="add")editorUI.main.Window.content.elements[name] = props;
+	if(c=="select"){
+		if(name == editorUI.name){
+			editorUI.current = null;
+			editorUI.name = null;
+			alert("Current element: unselected!");
+		}else{
+			editorUI.current = editorUI.main.Window.content.elements[name];
+			alert("Current element: "+name+" selected!");
+			editorUI.name = name;
+		}
+	}
+}

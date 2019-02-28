@@ -1,17 +1,3 @@
-
-/*
-  _____               ______    _ _ _
- |  __ \             |  ____|  | (_) |
- | |  | | _____   __ | |__   __| |_| |_ ___  _ __
- | |  | |/ _ \ \ / / |  __| / _` | | __/ _ \| '__|
- | |__| |  __/\ V /  | |___| (_| | | || (_) | |
- |_____/ \___| \_/   |______\__,_|_|\__\___/|_|
-
-
-       Developed by Nernar (vk.com/nernar)
-   This code is a copyright, do not distribute.
-
-*/
 var Widgets = {
 	ctx: UI.getContext(),
 	theme: 16974120,
@@ -57,13 +43,13 @@ var Widgets = {
 			: (value * 1 / 480 * this.display.height);
 	},
 	check: function(image, isPath) {
-		if(!isPath){return image && new java.io.File(__dir__ + "gui/" + image + ".png").exists();
-	}	else {return image && new java.io.File(image).exists();}
+		if(!isPath){return image && new java.io.File(__dir__ + "gui/UI/" + image + ".png").exists();}
+		else {return image && new java.io.File(image).exists();}
 	},
 	bitmap: function(file, scale, isPath) {
-		if(!this.check(file)) return null;
-		var bitmap = null;
-		if(isPath){	bitmap = FileTools.ReadImage(file);	}else{	bitmap = FileTools.ReadImage(__dir__ + "gui/" + file + ".png");	}
+		if(!this.check(file, isPath)) return null;
+		var bitmap = "";
+		if(isPath){	bitmap = FileTools.ReadImage(file);	}else{	bitmap = FileTools.ReadImage(__dir__ + "gui/UI/" + file + ".png");	}
 		return android.graphics.drawable.BitmapDrawable(android.graphics.Bitmap.createScaledBitmap(android.graphics.Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight()), bitmap.getWidth() * (scale || 1), bitmap.getHeight() * (scale || 1), false));
 	},
 	parse: function(color) {
@@ -88,7 +74,7 @@ var Widgets = {
 			gravity, x || 0, y || 0);
 		return window;
 	},
-	linear: function(views, orientation, gravity, params) {
+	linear: function(views, orientation, gravity, params, color) {
 		var layout = new android.widget.LinearLayout(this.ctx);
 		layout.setOrientation((orientation != null) ? orientation : this.orientate.vertical);
 		if(params) layout.setLayoutParams(params);
