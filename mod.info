@@ -1,4 +1,6 @@
-﻿{"name":"UIEditor",
-"author":"Создан Антоном Крыжановским",
-"version":"closed beta 0.0.1",
-"description":"UI Editor For InnerCore Interfaces"}
+﻿{
+	"name":"UIEditor",
+	"author":"Создан Антоном Крыжановским",
+	"version":"open beta 1.3.2",
+	"description":"UI Editor For InnerCore Interfaces"
+}

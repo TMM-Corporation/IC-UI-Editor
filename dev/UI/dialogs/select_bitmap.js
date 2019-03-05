@@ -1,15 +1,11 @@
-function selectBitmap(t){
-	var type = t;
+function selectBitmap(type){
 	Widgets.run(function(){
 		var files = FileTools.GetListOfFiles(__dir__+"gui/"), widgets = [];
 		for(let i in files){
 			let item = files[i].toString();
-			item = item.replace(__dir__+"gui/", "");
-			item = item.replace(".png", "");
-			item = item+"";
-			let text = Widgets.text("["+i+"]: "+item, 8),
+			item = item.replace(__dir__+"gui/", "");	item = item.replace(".png", "");	item = item+"";
+			let text = Widgets.text(item, 8),
 			linear = Widgets.linear([text], Widgets.orientate.horizontal, Widgets.gravity.left);
-			//item = "custom/"+item+"";
 			linear.setOnClickListener(function(){
 				let c = editorUI.current;
 				alert("You selected ["+item+"] bitmap");

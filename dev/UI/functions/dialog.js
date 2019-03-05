@@ -1,12 +1,27 @@
+
+/*
+  _____               ______    _ _ _
+ |  __ \             |  ____|  | (_) |
+ | |  | | _____   __ | |__   __| |_| |_ ___  _ __
+ | |  | |/ _ \ \ / / |  __| / _` | | __/ _ \| '__|
+ | |__| |  __/\ V /  | |___| (_| | | || (_) | |
+ |_____/ \___| \_/   |______\__,_|_|\__\___/|_|
+
+
+       Developed by Nernar (vk.com/nernar)
+   This code is a copyright, do not distribute.
+
+*/
+
 function dialog(properties) {
 	Widgets.run(function() {
 		var builder = new android.app.AlertDialog.Builder(Widgets.ctx, Widgets.dialogTheme);
-		
+
 		if(properties.title != null) builder.setTitle(properties.title);
 		if(properties.message != null) builder.setMessage(properties.message);
 		if(properties.view != null) builder.setView(properties.view);
 		if(properties.cancelable != null) builder.setCancelable(properties.cancelable);
-		
+
 		if(properties.items != null) {
 			var items = properties.items;
 			builder.setItems(items.text, items.click ? function(interface, item) {
@@ -15,7 +30,7 @@ function dialog(properties) {
 				} catch(e) {}
 			} : null);
 		}
-	
+
 		if(properties.multi != null) {
 			var multi = properties.multi;
 			builder.setMultiChoiceItems(multi.text, multi.check ? multi.check : null, multi.click ? function(interface, item, active) {
@@ -24,7 +39,7 @@ function dialog(properties) {
 				} catch(e) {}
 			} : null);
 		}
-		
+
 		if(properties.buttons != null) {
 			var text = properties.buttons.text || [];
 			var click = properties.buttons.click || [];
@@ -48,7 +63,7 @@ function dialog(properties) {
 				} : null);
 			}
 		}
-		
+
 		var build = builder.create();
 		if(properties)build.show();
 		return build;

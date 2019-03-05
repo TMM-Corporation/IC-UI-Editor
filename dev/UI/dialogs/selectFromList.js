@@ -3,14 +3,16 @@ function selectElement(){
 		var elements = editorUI.main.Window.content.elements, widgets = [];
 		for(let i in elements){
 			let item = i;
-			item = item+"";
-			let text = Widgets.text("["+elements[i].type+"]: "+item, 8),
-			linear = Widgets.linear([text], Widgets.orientate.horizontal, Widgets.gravity.left);
-			linear.setOnClickListener(function(){
-				edit(["select", item]);
-			});
-			linear.setPadding(16, 4, 16, 4);
-			widgets.push(linear);
+			if(elements[item]!=null){
+				item = item+"";
+				let text = Widgets.text("["+elements[i].type+"]: "+item, 8),
+				linear = Widgets.linear([text], Widgets.orientate.horizontal, Widgets.gravity.left);
+				linear.setOnClickListener(function(){
+					edit(["select", item]);
+				});
+				linear.setPadding(16, 4, 16, 4);
+				widgets.push(linear);
+			}
 		}
 		var layout = Widgets.linear(widgets),
 			scroll = Widgets.scroll(layout),

@@ -1,3 +1,3 @@
-function addElement(adding){
-	
+function addElement(){
+
 }

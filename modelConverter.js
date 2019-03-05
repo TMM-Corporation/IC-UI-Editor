@@ -1,6 +1,4 @@
 var code = ;
-
-
 console.log("var render = new ICRender.Model();\nvar model = BlockRenderer.createModel();");
 search: for(var i in code.elements){
 	for(var u in code.textures){

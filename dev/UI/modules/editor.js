@@ -9,16 +9,15 @@ var gui = {
 };
 var editorUI = {
 	deleted: 0,
+	count: 0,
+	x: 1,
 	name: null,
 	current: null,
-	count: 0,
 	main: {
 		Window: new UI.StandartWindow({
-			standart: { header: {text: {text: "UI Editor"}},
-			background: {color: android.graphics.Color.rgb(179, 179, 179)}},
-			drawing: [], elements: {
-				"test": {type: "button", x: 100, y: 100, scale: 3.2, size: 40, bitmap: "button_element", clicker: {onClick: function(){edit(["select", "test"]);}}},
-			} }),
+			standart: {header: {text: {text: "____________________UI Editor____________________"}},
+			background: {color: android.graphics.Color.rgb(179, 179, 179)}, inventory: {standart: true} },
+			drawing: [], elements: {} }),
 		container: null
 	},
 	open: function(){
@@ -36,13 +35,13 @@ var editorUI = {
 		ui.enabled = false;
 	}
 };
-function edit(changes, longclick, alertEnabled){
+function edit(changes, alertEnabled){
 	var cur = editorUI.current,
 		c = changes[0], // selected option
 		name = changes[1], // name of element
 		props = changes[2]; // props for element
 	if(editorUI.current!=null){
-		if(longclick==true){
+		if(editorUI.x==10){
 			if(c=="right")cur.x+=10;
 			if(c=="left")cur.x-=10;
 			if(c=="down")cur.y+=10;
@@ -52,11 +51,11 @@ function edit(changes, longclick, alertEnabled){
 			if(c=="left")cur.x-=1;
 			if(c=="down")cur.y+=1;
 			if(c=="up")cur.y-=1;
-			if(c=="scaleUp")cur.scale+=0.1;
-			if(c=="scaleDown")cur.scale-=0.1;
-			if(c=="sizeUp")cur.size+=1;
-			if(c=="sizeDown")cur.si
 		}
+		if(c=="scaleUp")cur.scale+=0.1;
+		if(c=="scaleDown")cur.scale-=0.1;
+		if(c=="sizeUp")cur.size+=1;
+		if(c=="sizeDown")cur.size-=1;
 	}
 	if(c=="remove"){
 		if(cur){
@@ -87,5 +86,6 @@ function edit(changes, longclick, alertEnabled){
 			alert("Current element: "+name+" selected!");
 			editorUI.name = name;
 		}
-	}
-}
+	};
+	if(c=="export")exportDial();
+};
