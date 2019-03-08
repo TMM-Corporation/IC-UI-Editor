@@ -20,11 +20,10 @@ function exportUI(rewrite){
 	let files = FileTools.GetListOfFiles(__dir__+"guis/"),
 		count = 0,
 		ui = editorUI.main.Window.content;
-	if(FileTools.isExists(__dir__+"dev/guis")==false) FileAPI.createNewDir(__dir__+"dev/guis");
+	if(FileTools.isExists(__dir__+"guis")==false) FileAPI.createNewDir(__dir__, "guis");
 	for(let i in files)count+=1;
 	if(rewrite==true){var name = "CustomUI_"+count+".js";}else{var name = "CustomUI_"+(count+1)+".js";}
 	let dir = __dir__+"guis/"+name;
-	alert("Exported with name "+name);
 	let exporting = "var custom_UI = new UI.StandartWindow({\n\tstandart: {header: {text: {text: \"Created With UIEditor\"}}\n\tbackground: {color: android.graphics.Color.rgb(179, 179, 179)}, inventory: {standart: true}},\n\tdrawing: [],\n\telements: {";
 	for(let u in ui.elements){
 		let i = u, el="";
@@ -33,4 +32,6 @@ function exportUI(rewrite){
 		exporting+=el;
 	} exporting+="\n\t}\n});";
 	FileTools.WriteText(dir, exporting);
+	if(FileTools.isExists(__dir__+"guis")==true)alert("Exported with name "+name);
+	else alert("Error exporting");
 }
