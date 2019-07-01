@@ -5,7 +5,7 @@ function selectElement(){
 			let item = i;
 			if(elements[item]!=null){
 				item = item+"";
-				let text = Widgets.text("["+elements[i].type+"]: "+item, 8),
+				let text = Widgets.text("["+elements[i].type+"]: "+item, 16),
 				linear = Widgets.linear([text], Widgets.orientate.horizontal, Widgets.gravity.left);
 				linear.setOnClickListener(function(){
 					edit(["select", item]);

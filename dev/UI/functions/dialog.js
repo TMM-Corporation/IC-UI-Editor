@@ -63,9 +63,10 @@ function dialog(properties) {
 				} : null);
 			}
 		}
-
+		var width = UI.getScreenHeight()*1.6;
 		var build = builder.create();
 		if(properties)build.show();
+		build.getWindow().setLayout(width, Widgets.size.wrap);
 		return build;
 	});
 }

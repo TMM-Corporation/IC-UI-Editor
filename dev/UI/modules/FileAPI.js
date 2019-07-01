@@ -70,16 +70,27 @@ var FileAPI={
 			f.isDirectory() || endsWith && !f.getName().endsWith(endsWith) || c.push(f.getName())
 		}
 		return c
+	},
+	//my
+	checkDir:function(name){
+		for(let i in name){
+			if(FileTools.isExists(__dir__+i)==false)
+			FileAPI.createNewDir(__dir__, i);
+		}
+	},
+	list:function(dir) {
+		let dirs = [];
+		for(let i in dir){
+			dirs.push(FileTools.GetListOfFiles(__dir__+i));
+		}
+		return dirs;
+	},
+	getFilesCount:function(dir) {
+		let count=0;
+		for(let i in dir)count+=1; 
+		return count;
 	}
 };
 /*
-	┬─┬ノ( º _ ºノ) 
+	┬─┬ノ( º _ ºノ)
 */
-
-
-
-
-
-
-
-

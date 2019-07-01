@@ -1,33 +1,33 @@
 var background = {
-	type: "background", 
+	type: "background",
 	color: цвет
 }, bitmap = {
-	type: "bitmap", 
-	bitmap: "bitmap", 
-	x: 300, 
-	y: 60, 
+	type: "bitmap",
+	bitmap: "bitmap",
+	x: 300,
+	y: 60,
 	scale: 3.2
 }, frame = {
-	type: "frame", 
-	x: 300, 
-	y: 60, 
-	width: 300, 
-	height: 300, 
-	bitmap: "frame", 
-	bg: "frame_bg, 
+	type: "frame",
+	x: 300,
+	y: 60,
+	width: 300,
+	height: 300,
+	bitmap: "frame",
+	bg: "frame_bg,
 	scale: 3.2
 }, text = {
-	type: "text", 
-	text: "текст", 
-	x: 300, 
-	y: 60, 
+	type: "text",
+	text: "текст",
+	x: 300,
+	y: 60,
 	font: шрифт_текста
 }, line = {
-	type: "line", 
-	x1: 300, 
-	y1: 60, 
-	x2: 400, 
-	y2: 120, 
+	type: "line",
+	x1: 300,
+	y1: 60,
+	x2: 400,
+	y2: 120,
 	width: 3.2,
 	color: цвет
 };
@@ -35,17 +35,17 @@ var background = {
 function addElement(){
 	Widgets.run(function(){
 		var types = {
-			"slot": slotProps, 
-			"invSlot(not selectable!)": invSlotProps, 
-			"button": buttonProps, 
-			"closeButton(not selectable!)": closeProps, 
-			"scale": scaleProps, 
-			"text": textProps, 
+			"slot": slotProps,
+			"invSlot(not selectable!)": invSlotProps,
+			"button": buttonProps,
+			"closeButton(not selectable!)": closeProps,
+			"scale": scaleProps,
+			"text": textProps,
 			"image": imageProps
 		}, widgets = [];
 		for(let u in types){
 			let i = u;
-			let text = Widgets.linear([Widgets.text(i)], null, Widgets.gravity.left);
+			let text = Widgets.linear([Widgets.text(i, 16)], null, Widgets.gravity.left);
 			text.setOnClickListener(function(){
 				Widgets.run(function(){
 					let count = edit(["match"], false),
