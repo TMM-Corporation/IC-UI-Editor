@@ -17,44 +17,49 @@ function exportElement(e, name){
 	return props;
 }
 
-function exportUI(rewrite){
+function exportUI(rewrite, newPRJ){
 	Widgets.run(function(){
-		//check directories
+		//check directories for existing and create if not exists.
 		FileAPI.checkDir(["guis", "projects"]);
 		//get list of two dirs to save, count 1 & 2 for dirs. get content & elements.
-		let files = FileAPI.list(["guis/", "projects/"]),
+		let files = FileAPI.list(["guis/"]),
 			count1 = FileAPI.getFilesCount(files[0]),
-			count2 = FileAPI.getFilesCount(files[1]),
 			ui = editorUI.main.Window.content,
 			elements = ui.elements;
 		//check for rewriting
+		if(newPRJ==true){editorUI.project=("CUI_"+(count1+1)+".js")}
 		if(rewrite==true&&editorUI.project!=null){
-			var fileGUI = "CUI_"+editorUI.project+".js";
+			var fileGUI = editorUI.project;
 			var filePRJ = fileGUI+"on";
 		}else if (rewrite==true&&editorUI.project==null) {
-			alert("No projects imported last");
-		}
-		if(!rewrite){
+			if(FileAPI.getGuiItems(ui)==true)alert("No projects imported last, saving one new");
 			var fileGUI = "CUI_"+(count1+1)+".js";
-			var filePRJ = "CUI_"+(count2+1)+".json";
+			var filePRJ = "CUI_"+(count1+1)+".json";
+		}else if(!rewrite){
+			var fileGUI = "CUI_"+(count1+1)+".js";
+			var filePRJ = "CUI_"+(count1+1)+".json";
 		}
 		//base for gui
 		let exporting = "var custom_UI = new UI.StandartWindow({\n\tstandart: {header: {text: {text: \"Created With UIEditor\"}},\n\tbackground: {color: android.graphics.Color.parseColor(\"#b3b3b3\")}, inventory: {standart: true}},\n\tdrawing: [],\n\telements: {";
 		//writing elements
+		// for(let i in elements){0
+		// 	if(elements[i]!=null)
+		// 	json.push(elements[i]);
+		// }
 		var json = {"elements": elements};
 		for(let u in elements){
 			let i = u, el="";
 			if(elements[i]!=null)
-			exporting+= exportElement(elements[i], i);
+			exporting += exportElement(elements[i], i);
 		}
 		//after writing elements, ending the gui.
 		exporting+="\n\t}\n});";
 		//export gui to UIEditor/guis/CUI_ num .js
-		FileTools.WriteText(__dir__+"guis/"+fileGUI, exporting);
+		if(FileAPI.getGuiItems(ui)==true)FileTools.WriteText(__dir__+"guis/"+fileGUI, exporting);
 		//export project to UIEditor/projects/CUI_ num .js
-		FileTools.WriteJSON(__dir__+"projects/"+filePRJ, json, false);
+		if(FileAPI.getGuiItems(ui)==true)FileTools.WriteJSON(__dir__+"projects/"+filePRJ, json, true);
 		//alert for informate user
-		alert("Exported to guis/"+fileGUI and to "projects/"+filePRJ);
+		if(FileAPI.getGuiItems(ui)==true)alert("Saved to guis/"+fileGUI+" and to projects/"+filePRJ); else alert("Nothing to save...");
 	});
 }
 function importUI(item) {

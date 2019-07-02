@@ -74,21 +74,28 @@ var FileAPI={
 	//my
 	checkDir:function(name){
 		for(let i in name){
-			if(FileTools.isExists(__dir__+i)==false)
-			FileAPI.createNewDir(__dir__, i);
+			if(FileTools.isExists(__dir__+name[i])==false)
+			FileAPI.createNewDir(__dir__, name[i]);
 		}
 	},
 	list:function(dir) {
-		let dirs = [];
+		let list = [];
 		for(let i in dir){
-			dirs.push(FileTools.GetListOfFiles(__dir__+i));
+			list.push(FileTools.GetListOfFiles(__dir__+dir[i]));
 		}
-		return dirs;
+		return list;
 	},
-	getFilesCount:function(dir) {
+	getFilesCount:function(list) {
 		let count=0;
-		for(let i in dir)count+=1; 
+		for(let i in list)count++;
 		return count;
+	},
+	getGuiItems: function(gui){
+		let count = 0;
+		for(let i in gui.elements){
+			if(gui.elements[i]!=null){count++;}
+		}
+		if(count>0)return true; else return false;
 	}
 };
 /*
