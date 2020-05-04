@@ -1,12 +1,6 @@
 /*
     ┻━┻ ︵ヽ(`Д´)ﾉ︵ ┻━┻
 */
-
-var gui = {
-    x: 60, y: 60, //positions
-    s: 3.2, m: 3.3, b: 3.4, //scales
-    bg: {type: "background", color: null} //background null
-};
 var editorUI = {
     deleted: 0,
     count: 0,

@@ -1,62 +1,53 @@
-
-/*
-  _____               ______    _ _ _
- |  __ \             |  ____|  | (_) |
- | |  | | _____   __ | |__   __| |_| |_ ___  _ __
- | |  | |/ _ \ \ / / |  __| / _` | | __/ _ \| '__|
- | |__| |  __/\ V /  | |___| (_| | | || (_) | |
- |_____/ \___| \_/   |______\__,_|_|\__\___/|_|
-
-
-       Developed by Nernar (vk.com/nernar)
-   This code is a copyright, do not distribute.
-
-*/
-
+/**
+ * @function test the code test
+ * @arg getContext get mcpe contexts
+ */
+function test(code) { //test the code
+		Widgets.context.runOnUiThread(function() {
+				try {
+						code();
+				} catch(e) {
+						android.widget.Toast.makeText(Widgets.ctx, e + " (#" + e.lineNumber + ")", android.widget.Toast.LENGTH_LONG).show();
+				}
+		});
+};
 var Widgets = {
-    ctx: UI.getContext(),
-    theme: 16974120,
-    dialogTheme: 16974126,
+    context: UI.getContext(),
+    theme: 16974120, //Theme_DeviceDefault - android theme
+    dialogTheme: 16974126, //Theme_DeviceDefault_Dialog - android default dialog theme
     size: {
-        wrap: android.widget.RelativeLayout.LayoutParams.WRAP_CONTENT,
-        match: android.widget.RelativeLayout.LayoutParams.MATCH_PARENT
+        wrap: android.widget.RelativeLayout.LayoutParams.WRAP_CONTENT, //wraps the layout to content
+        match: android.widget.RelativeLayout.LayoutParams.MATCH_PARENT //makes the width of layout to parent
     },
     display: {
-        width: UI.getContext().getWindowManager().getDefaultDisplay().getWidth(),
-        height: UI.getContext().getWindowManager().getDefaultDisplay().getHeight()
+        width: UI.getContext().getWindowManager().getDefaultDisplay().getWidth(), //gets the display width
+        height: UI.getContext().getWindowManager().getDefaultDisplay().getHeight() //gets the display height
     },
-    gravity: {
+    gravity: { // set the layout gravity
         top: android.view.Gravity.TOP,
         bottom: android.view.Gravity.BOTTOM,
         left: android.view.Gravity.LEFT,
         right: android.view.Gravity.RIGHT,
         center: android.view.Gravity.CENTER
     },
-    visibility: {
+    visibility: { //visibility of object
         visible: android.view.View.VISIBLE,
         invisible: android.view.View.INVISIBLE,
         gone: android.view.View.GONE
     },
-    color: android.graphics.Color,
-    font: android.graphics.Typeface.createFromFile(new java.io.File(FileTools.root + "games/com.mojang/innercore/mc-typeface.ttf")),
-    orientate: {
-        vertical: android.widget.LinearLayout.VERTICAL,
+		color: function(color) {
+			return android.graphics.Color.parseColor(color); //returns the custom color
+		},
+    font: android.graphics.Typeface.createFromFile(new java.io.File(FileTools.root + "games/com.mojang/innercore/mc-typeface.ttf")), //default minecraft font for text
+    orientate: { //set the layout orientation
+        vertical: android.widget.LinearLayout.VERTICAL, //vertical
         horizontal: android.widget.LinearLayout.HORIZONTAL
     },
-    run: function(code) {
-        this.ctx.runOnUiThread(function() {
-            try {
-                code();
-            } catch(e) {
-                android.widget.Toast.makeText(Widgets.ctx, e + " (#" + e.lineNumber + ")", android.widget.Toast.LENGTH_LONG).show();
-            }
-        });
-    },
-    resize: function(value, isWidth) {
-        return isWidth
-            ? (value * 1 / 800 * this.display.width)
-            : (value * 1 / 480 * this.display.height);
-    },
+    // resize: function(value, isWidth) {
+    //     return isWidth
+    //         ? (value * 1 / 800 * this.display.width)
+    //         : (value * 1 / 480 * this.display.height);
+    // },
     check: function(image, isPath) {
         if(!isPath){return image && new java.io.File(__dir__ + "gui/UI/" + image + ".png").exists();}
         else {return image && new java.io.File(image).exists();}
@@ -89,12 +80,12 @@ var Widgets = {
             gravity, x || 0, y || 0);
         return window;
     },
-    linear: function(views, orientation, gravity, params, color) {
+    linear: function(views, orientation, gravity, params) {
         var layout = new android.widget.LinearLayout(this.ctx);
         layout.setOrientation((orientation != null) ? orientation : this.orientate.vertical);
         if(params) layout.setLayoutParams(params);
         layout.setGravity((gravity != null) ? gravity : Widgets.gravity.center);
-        for(a in views)
+        for(let a in views)
             layout.addView(views[a]);
         return layout;
     },
@@ -161,3 +152,34 @@ var Widgets = {
         };
     }
 };
+
+function buildUI(type, name) {
+	test(function() {
+		var ui = FileTools.ReadJSON(__dir__+"ModUI/Menu.json");
+		if(type == 1){
+			for(let u in ui.menus){
+				let i = u;
+				if(i.name == name){
+					buildWindow(i);
+					break;
+				}
+			}
+		}
+	});
+}
+function buildWindow(ui) {
+	var window = {};
+	for(let i in ui){
+		if(ui.add){
+			window.push(addToUI(ui));
+		}
+	}
+}
+function addToUI(ui) {
+	layout = {};
+	for(let i in ui)
+	if(ui.add){addToUI(addWidget(ui.add.i));};
+}
+function addWidget(ui) {
+	
+}
