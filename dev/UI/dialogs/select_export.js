@@ -1,18 +1,13 @@
-function importUI(item) {
+function exportDial(){
 	Widgets.run(function(){
-		var c = FileTools.ReadJSON(__dir__+"projects/"+item);
-		for(let u in c["elements"]){
-			let i = u;
-			let cei = c["elements"][i];
-			edit(["add", i, cei]);
-			if(cei!= null || cei!= undefined)
-			cei.clicker = {onClick: function(){edit(["select", i]);}};
-		};
-		if(c!= undefined)
-		alert("Loaded ["+item+"]")
-		else alert("Error loading ["+item+"], undefined");
+		let dial = {	title: "Save Menu",
+				buttons: {	text: ["Save last imported", null, "Create new file"],
+					click: [function(){exportUI(true);}, null, function(){exportUI(false, true);}]
+				}
+			};
+		dialog(dial);
 	});
-}
+};
 function importDial(){
 	Widgets.run(function(){
 		var widgets = [],	files = FileTools.GetListOfFiles(__dir__+"projects/"), widgets = [];
